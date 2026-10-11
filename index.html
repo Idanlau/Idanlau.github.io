@@ -2,282 +2,657 @@
 <html lang="en">
 <head>
 	<meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Idan Lau Portfolio Page</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Idan Lau</title>
+	<meta name="description" content="Idan Lau — Computer Science at NYU. Machine Learning, Robotics, and Finance.">
+	<style>
+		:root {
+			--bg: #0b0f17;
+			--bg-soft: #111827;
+			--card: #151d2b;
+			--border: #233047;
+			--text: #e6e9f0;
+			--muted: #9aa7bd;
+			--accent: #5b8cff;
+			--accent-2: #38d9a9;
+			--radius: 14px;
+			--max: 1080px;
+		}
 
-    <link rel="stylesheet" href="public_html/assets/vendors/themify-icons/css/themify-icons.css">
+		* { box-sizing: border-box; margin: 0; padding: 0; }
 
-	<link rel="stylesheet" href="public_html/assets/css/johndoe.css">
+		html { scroll-behavior: smooth; }
+
+		body {
+			background: var(--bg);
+			color: var(--text);
+			font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+			line-height: 1.6;
+			-webkit-font-smoothing: antialiased;
+		}
+
+		a { color: var(--accent); text-decoration: none; }
+		a:hover { text-decoration: underline; }
+
+		img { display: block; max-width: 100%; }
+
+		.wrap { max-width: var(--max); margin: 0 auto; padding: 0 24px; }
+
+		/* ---------- Nav ---------- */
+		nav {
+			position: fixed;
+			top: 0; left: 0; right: 0;
+			z-index: 100;
+			background: rgba(11, 15, 23, 0.8);
+			backdrop-filter: blur(12px);
+			-webkit-backdrop-filter: blur(12px);
+			border-bottom: 1px solid var(--border);
+		}
+
+		.nav-inner {
+			max-width: var(--max);
+			margin: 0 auto;
+			padding: 0 24px;
+			height: 60px;
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+		}
+
+		.nav-logo {
+			font-weight: 700;
+			font-size: 18px;
+			color: var(--text);
+			letter-spacing: 0.3px;
+		}
+		.nav-logo:hover { text-decoration: none; }
+		.nav-logo span { color: var(--accent); }
+
+		.nav-links {
+			display: flex;
+			align-items: center;
+			gap: 28px;
+			list-style: none;
+		}
+
+		.nav-links a {
+			color: var(--muted);
+			font-size: 14px;
+			font-weight: 500;
+			transition: color 0.15s;
+		}
+		.nav-links a:hover { color: var(--text); text-decoration: none; }
+
+		.nav-resume {
+			border: 1px solid var(--accent);
+			border-radius: 8px;
+			padding: 6px 14px;
+			color: var(--accent) !important;
+		}
+		.nav-resume:hover { background: rgba(91, 140, 255, 0.12); }
+
+		.nav-toggle {
+			display: none;
+			background: none;
+			border: none;
+			cursor: pointer;
+			padding: 8px;
+		}
+		.nav-toggle span {
+			display: block;
+			width: 22px;
+			height: 2px;
+			background: var(--text);
+			margin: 5px 0;
+			transition: 0.2s;
+		}
+
+		/* ---------- Hero ---------- */
+		.hero {
+			min-height: 100vh;
+			display: flex;
+			align-items: center;
+			position: relative;
+			overflow: hidden;
+			padding: 120px 0 80px;
+		}
+
+		.hero::before {
+			content: "";
+			position: absolute;
+			width: 600px; height: 600px;
+			border-radius: 50%;
+			background: radial-gradient(circle, rgba(91, 140, 255, 0.18), transparent 65%);
+			top: -150px; right: -100px;
+			pointer-events: none;
+		}
+		.hero::after {
+			content: "";
+			position: absolute;
+			width: 500px; height: 500px;
+			border-radius: 50%;
+			background: radial-gradient(circle, rgba(56, 217, 169, 0.10), transparent 65%);
+			bottom: -150px; left: -100px;
+			pointer-events: none;
+		}
+
+		.hero-inner {
+			display: flex;
+			align-items: center;
+			gap: 56px;
+			position: relative;
+			z-index: 1;
+		}
+
+		.hero-text { flex: 1; }
+
+		.hero-hello {
+			color: var(--accent-2);
+			font-family: "SF Mono", Menlo, Consolas, monospace;
+			font-size: 15px;
+			margin-bottom: 16px;
+		}
+
+		.hero h1 {
+			font-size: clamp(40px, 7vw, 64px);
+			line-height: 1.1;
+			font-weight: 800;
+			letter-spacing: -1px;
+		}
+
+		.hero h2 {
+			font-size: clamp(22px, 4vw, 34px);
+			color: var(--muted);
+			font-weight: 600;
+			margin-top: 8px;
+			letter-spacing: -0.5px;
+		}
+
+		.hero p {
+			color: var(--muted);
+			max-width: 540px;
+			margin-top: 24px;
+			font-size: 17px;
+		}
+
+		.hero-actions {
+			display: flex;
+			align-items: center;
+			gap: 16px;
+			margin-top: 36px;
+			flex-wrap: wrap;
+		}
+
+		.btn {
+			display: inline-flex;
+			align-items: center;
+			gap: 8px;
+			padding: 12px 22px;
+			border-radius: 10px;
+			font-size: 15px;
+			font-weight: 600;
+			border: 1px solid transparent;
+			cursor: pointer;
+			transition: transform 0.15s, background 0.15s, border-color 0.15s;
+		}
+		.btn:hover { text-decoration: none; transform: translateY(-2px); }
+
+		.btn-primary {
+			background: var(--accent);
+			color: #fff;
+		}
+		.btn-primary:hover { background: #4a7df5; }
+
+		.hero-socials {
+			display: flex;
+			gap: 18px;
+			margin-top: 36px;
+		}
+		.hero-socials a {
+			color: var(--muted);
+			transition: color 0.15s, transform 0.15s;
+			display: inline-flex;
+		}
+		.hero-socials a:hover { color: var(--accent); transform: translateY(-2px); }
+		.hero-socials svg { width: 24px; height: 24px; }
+
+		.avatar-ring {
+			flex-shrink: 0;
+			width: 240px; height: 240px;
+			border-radius: 50%;
+			padding: 5px;
+			background: linear-gradient(135deg, var(--accent), var(--accent-2));
+		}
+		.avatar-ring img {
+			width: 100%; height: 100%;
+			border-radius: 50%;
+			object-fit: cover;
+			border: 6px solid var(--bg);
+		}
+
+		/* ---------- Sections ---------- */
+		section { padding: 96px 0; }
+
+		.section-head {
+			display: flex;
+			align-items: center;
+			gap: 18px;
+			margin-bottom: 48px;
+		}
+		.section-head .num {
+			font-family: "SF Mono", Menlo, Consolas, monospace;
+			color: var(--accent-2);
+			font-size: 16px;
+		}
+		.section-head h2 {
+			font-size: 28px;
+			font-weight: 700;
+			letter-spacing: -0.5px;
+			white-space: nowrap;
+		}
+		.section-head::after {
+			content: "";
+			flex: 1;
+			height: 1px;
+			background: var(--border);
+		}
+
+		/* ---------- About ---------- */
+		.about-grid {
+			display: grid;
+			grid-template-columns: 1.4fr 1fr;
+			gap: 48px;
+			align-items: start;
+		}
+
+		.about-grid p { color: var(--muted); margin-bottom: 16px; }
+
+		.info-card {
+			background: var(--card);
+			border: 1px solid var(--border);
+			border-radius: var(--radius);
+			padding: 24px 28px;
+		}
+		.info-card h3 {
+			font-size: 15px;
+			text-transform: uppercase;
+			letter-spacing: 1.5px;
+			color: var(--accent);
+			margin-bottom: 16px;
+		}
+		.info-card dl { font-size: 15px; }
+		.info-card dt {
+			color: var(--muted);
+			font-size: 12px;
+			text-transform: uppercase;
+			letter-spacing: 1px;
+			margin-top: 12px;
+		}
+		.info-card dd { margin-top: 2px; }
+
+		.tags { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 20px; }
+		.tag {
+			font-family: "SF Mono", Menlo, Consolas, monospace;
+			font-size: 13px;
+			color: var(--accent-2);
+			background: rgba(56, 217, 169, 0.08);
+			border: 1px solid rgba(56, 217, 169, 0.25);
+			padding: 4px 12px;
+			border-radius: 999px;
+		}
+
+		/* ---------- Experience ---------- */
+		.exp-list { display: flex; flex-direction: column; gap: 20px; }
+
+		.exp-card {
+			display: flex;
+			align-items: center;
+			gap: 24px;
+			background: var(--card);
+			border: 1px solid var(--border);
+			border-radius: var(--radius);
+			padding: 24px 28px;
+			transition: transform 0.15s, border-color 0.15s;
+		}
+		.exp-card:hover { transform: translateY(-3px); border-color: var(--accent); }
+
+		.exp-logo {
+			width: 72px; height: 72px;
+			border-radius: 12px;
+			background: #fff;
+			object-fit: contain;
+			padding: 8px;
+			flex-shrink: 0;
+		}
+
+		.exp-card h3 { font-size: 18px; font-weight: 700; }
+		.exp-card .org { color: var(--accent); font-weight: 600; font-size: 15px; }
+		.exp-card .desc { color: var(--muted); font-size: 14px; margin-top: 4px; }
+
+		/* ---------- Projects ---------- */
+		.proj-grid {
+			display: grid;
+			grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+			gap: 24px;
+		}
+
+		.proj-card {
+			background: var(--card);
+			border: 1px solid var(--border);
+			border-radius: var(--radius);
+			overflow: hidden;
+			display: flex;
+			flex-direction: column;
+			transition: transform 0.15s, border-color 0.15s;
+		}
+		.proj-card:hover { transform: translateY(-4px); border-color: var(--accent); }
+
+		.proj-img {
+			height: 170px;
+			overflow: hidden;
+			background: var(--bg-soft);
+		}
+		.proj-img img {
+			width: 100%; height: 100%;
+			object-fit: cover;
+			transition: transform 0.3s;
+		}
+		.proj-card:hover .proj-img img { transform: scale(1.05); }
+
+		.proj-body { padding: 24px 26px 26px; display: flex; flex-direction: column; flex: 1; }
+		.proj-body h3 { font-size: 19px; font-weight: 700; margin-bottom: 10px; }
+		.proj-body h3 a { color: inherit; }
+		.proj-body h3 a:hover { color: var(--accent); text-decoration: none; }
+		.proj-body p { color: var(--muted); font-size: 14px; flex: 1; }
+
+		.proj-featured { grid-column: 1 / -1; }
+		.proj-meta {
+			display: flex;
+			align-items: center;
+			gap: 12px;
+			flex-wrap: wrap;
+			margin-bottom: 14px;
+		}
+		.award {
+			font-family: "SF Mono", Menlo, Consolas, monospace;
+			font-size: 12px;
+			color: var(--accent-2);
+			background: rgba(56, 217, 169, 0.08);
+			border: 1px solid rgba(56, 217, 169, 0.25);
+			padding: 3px 11px;
+			border-radius: 999px;
+		}
+		.proj-date {
+			font-family: "SF Mono", Menlo, Consolas, monospace;
+			font-size: 13px;
+			color: var(--muted);
+		}
+		.proj-authors {
+			color: var(--muted);
+			font-size: 14px;
+			margin-bottom: 14px;
+		}
+		.proj-authors strong { color: var(--accent); font-weight: 700; }
+		.proj-diagram {
+			width: 100%;
+			border-radius: 10px;
+			margin-bottom: 16px;
+		}
+		.proj-bullets { list-style: none; flex: 1; }
+		.proj-bullets li {
+			color: var(--muted);
+			font-size: 14px;
+			padding-left: 18px;
+			position: relative;
+			margin-bottom: 8px;
+		}
+		.proj-bullets li::before {
+			content: "▸";
+			color: var(--accent);
+			position: absolute;
+			left: 0;
+		}
+
+		.proj-links { display: flex; gap: 16px; margin-top: 16px; }
+		.proj-links a {
+			font-size: 13px;
+			font-weight: 600;
+			display: inline-flex;
+			align-items: center;
+			gap: 5px;
+		}
+		.proj-links svg { width: 15px; height: 15px; }
+
+		/* ---------- Reveal animation ---------- */
+		.reveal {
+			opacity: 0;
+			transform: translateY(24px);
+			transition: opacity 0.6s ease, transform 0.6s ease;
+		}
+		.reveal.visible { opacity: 1; transform: none; }
+
+		/* ---------- Responsive ---------- */
+		@media (max-width: 860px) {
+			.hero-inner { flex-direction: column-reverse; text-align: center; gap: 36px; }
+			.hero-actions, .hero-socials { justify-content: center; }
+			.hero p { margin-left: auto; margin-right: auto; }
+			.avatar-ring { width: 180px; height: 180px; }
+			.about-grid { grid-template-columns: 1fr; }
+			.exp-card { flex-direction: column; text-align: center; }
+
+			.nav-toggle { display: block; }
+			.nav-links {
+				position: absolute;
+				top: 60px; left: 0; right: 0;
+				flex-direction: column;
+				background: var(--bg);
+				border-bottom: 1px solid var(--border);
+				padding: 20px 24px 28px;
+				gap: 20px;
+				display: none;
+			}
+			.nav-links.open { display: flex; }
+		}
+	</style>
 </head>
-<body data-spy="scroll" data-target=".navbar" data-offset="40" id="home">
-    <header class="header">
-        <div class="container">
-            <ul class="social-icons pt-3">
-                <li class="social-item"><a class="social-link text-light" href="https://www.linkedin.com/in/idan-lau-19bb671ba/" target="_blank"><i class="ti-linkedin" aria-hidden="true"></i></a></li>
-                <li class="social-item"><a class="social-link text-light" href="https://github.com/Idanlau" target="_blank"><i class="ti-github" aria-hidden="true"></i></a></li>
-                <li class="social-item"><a class="social-link text-light" href="#"><i class="ti-godddogle" aria-hidden="true"></i></a></li>
-                <li class="social-item"><a class="social-link text-light" href="#"><i class="ti-instdddagram" aria-hidden="true"></i></a></li>
-                <li class="social-item"><a class="social-link text-light" href="#"><i class="ti-gitdddhub" aria-hidden="true"></i></a></li>
-            </ul>  
-            <div class="header-content">
-                <h4 class="header-subtitle" >Hello, I am</h4>
-                <h1 class="header-title">Idan Lau</h1>
-                <h6 class="header-mono" ></h6>
-                <button class="btn btn-primary btn-rounded"  onclick="location.href='https://docs.google.com/document/d/1R6h2URxYJ75LX86Ev6gaobiaEXXNYHu5/edit?usp=sharing&ouid=105955930134134842992&rtpof=true&sd=true'; "><i class="ti-printer pr-2"></i>Resume</button>
-            </div>
-        </div>
-    </header>
-    <nav class="navbar sticky-top navbar-expand-lg navbar-light bg-white" data-spy="affix" data-offset-top="510">
-        <div class="container">
-            <button class="navbar-toggler ml-auto" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse mt-sm-20 navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav mr-auto">
-                    <li class="nav-item">
-                        <a href="#home" class="nav-link">Home</a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="#about" class="nav-link">About</a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="#resume" class="nav-link">Resume</a>
-                    </li>
-                </ul>
-                <ul class="navbar-nav brand">
-                    <img src="public_html/assets/imgs/avatar.png" alt="" class="brand-img">
-                    <li class="brand-txt">
-                        <h5 class="brand-title">Idan Lau</h5>
-                        <div class="brand-subtitle"></div>
-                    </li>
-                </ul>
-                <ul class="navbar-nav ml-auto">
-                    <li class="nav-item">
-                        <a href="#portfolio" class="nav-link">Portfolio</a>
-                    </li>
-                    <li class="nav-item last-item">
-                        <a href="#contact" class="nav-link">Contact</a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </nav>
-    <div class="container-fluid">
-        <div id="about" class="row about-section">
-            <div class="col-lg-4 about-card">
-                <h3 class="font-weight-light">About me</h3>
-                <span class="line mb-5"></span>
-              <!--  <h5 class="mb-3">A Web Designer / Developer Located In Our Lovely Earth</h5> -->
-                <p class="mt-20"> Curious about Machine Learning, Robotics and Finance.</p>
-                <button class="btn btn-outline-danger" onclick="location.href='https://docs.google.com/document/d/1R6h2URxYJ75LX86Ev6gaobiaEXXNYHu5/edit?usp=sharing&ouid=105955930134134842992&rtpof=true&sd=true'; " ><i class="icon-down-circled2 "></i>View My Resume</button>
-            </div>
-            <div class="col-lg-4 about-card">
-                <h3 class="font-weight-light">Personal Info</h3>
-                <span class="line mb-5"></span>
-                <ul class="mt40 info list-unstyled">
-                    <li><span>Name</span> : Idan Lau</li>
-                    <li><span>Email</span> : idanlau@nyu.edu</li>
-                    <li><span>University</span> : New York University</li>
-                    <li><span>Degree</span> : BS/MS in Computer Science, Minor in Mathematics</li>
-                    <li><span>Expected Graduation</span> : May 2026</li>
-                </ul>
-                <ul class="social-icons pt-3">
-                    <li class="social-item"><a class="social-link" href="https://www.linkedin.com/in/idan-lau-19bb671ba/" target="_blank"><i class="ti-linkedin" aria-hidden="true"></i></a></li>
-                    <li class="social-item"><a class="social-link" href="https://github.com/Idanlau" target="_blank"><i class="ti-github" aria-hidden="true"></i></a></li>
-                    <li class="social-item"><a class="social-link" href="#"><i class="ti-googleeee" aria-hidden="true"></i></a></li>
-                    <li class="social-item"><a class="social-link" href="#"><i class="ti-instagraeeem" aria-hidden="true"></i></a></li>
-                    <li class="social-item"><a class="social-link" href="#"><i class="ti-githubeeeee" aria-hidden="true"></i></a></li>
-                </ul>  
-            </div>
-            <div class="col-lg-4 about-card">
-                <h3 class="font-weight-light">My Experiences</h3>
-                <span class="line mb-5"></span>
-                <div class="row">
-                    <div class="col-1 text-danger pt-1"><i class="ti-widget icon-lg"></i></div>
-                    <div class="col-10 ml-auto mr-3">
-                        <h6>Machine Learning</h6>
-                        <p class="subtitle"></p>
-                        <hr>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-1 text-danger pt-1"><i class="ti-paint-bucket icon-lg"></i></div>
-                    <div class="col-10 ml-auto mr-3">
-                        <h6>Software Engineering</h6>
-                        <p class="subtitle"></p>
-                        <hr>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-1 text-danger pt-1"><i class="ti-stats-up icon-lg"></i></div>
-                    <div class="col-10 ml-auto mr-3">
-                        <h6>Data Science</h6>
-                        <p class="subtitle"> </p>
-                        <hr>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+<body>
 
+	<nav>
+		<div class="nav-inner">
+			<a class="nav-logo" href="#home">idan<span>lau</span></a>
+			<button class="nav-toggle" id="navToggle" aria-label="Toggle navigation">
+				<span></span><span></span><span></span>
+			</button>
+			<ul class="nav-links" id="navLinks">
+				<li><a href="#about">About</a></li>
+				<li><a href="#experience">Experience</a></li>
+				<li><a href="#research">Research</a></li>
+				<li><a href="#projects">Projects</a></li>
+				<li><a class="nav-resume" href="Idan_Resume.pdf" target="_blank" rel="noopener">Resume</a></li>
+			</ul>
+		</div>
+	</nav>
 
+	<!-- Hero -->
+	<header class="hero" id="home">
+		<div class="wrap hero-inner">
+			<div class="hero-text">
+				<h1>Idan Lau.</h1>
+				<h2>Machine Learning Engineer</h2>
+				<div class="hero-actions">
+					<a class="btn btn-primary" href="Idan_Resume.pdf" target="_blank" rel="noopener">View Resume</a>
+				</div>
+				<div class="hero-socials">
+					<a href="https://github.com/Idanlau" target="_blank" rel="noopener" aria-label="GitHub">
+						<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .5C5.65.5.5 5.65.5 12c0 5.08 3.29 9.39 7.86 10.91.58.11.79-.25.79-.55v-2.17c-3.2.7-3.87-1.36-3.87-1.36-.53-1.33-1.28-1.69-1.28-1.69-1.05-.72.08-.7.08-.7 1.16.08 1.77 1.19 1.77 1.19 1.03 1.77 2.7 1.26 3.36.96.1-.75.4-1.26.73-1.55-2.55-.29-5.23-1.28-5.23-5.68 0-1.26.45-2.28 1.19-3.09-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.18 1.18a11.1 11.1 0 0 1 5.8 0c2.2-1.49 3.17-1.18 3.17-1.18.63 1.59.23 2.76.12 3.05.74.81 1.18 1.83 1.18 3.09 0 4.42-2.69 5.39-5.25 5.67.41.36.78 1.06.78 2.14v3.17c0 .31.21.67.8.55A11.52 11.52 0 0 0 23.5 12C23.5 5.65 18.35.5 12 .5z"/></svg>
+					</a>
+					<a href="https://www.linkedin.com/in/idan-lau-19bb671ba/" target="_blank" rel="noopener" aria-label="LinkedIn">
+						<svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.45 20.45h-3.55v-5.57c0-1.33-.03-3.04-1.85-3.04-1.86 0-2.14 1.45-2.14 2.94v5.67H9.35V9h3.41v1.56h.05c.47-.9 1.63-1.85 3.36-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12zM7.12 20.45H3.56V9h3.56v11.45z"/></svg>
+					</a>
+					<a href="https://scholar.google.com/citations?view_op=list_works&hl=en&hl=en&user=TSsHsgoAAAAJ" target="_blank" rel="noopener" aria-label="Google Scholar">
+						<svg viewBox="0 0 24 24" fill="currentColor"><path d="M5.242 13.769L0 9.5 12 0l12 9.5-5.242 4.269C17.548 11.249 14.978 9.5 12 9.5c-2.977 0-5.548 1.748-6.758 4.269zM12 10a7 7 0 1 0 0 14 7 7 0 0 0 0-14z"/></svg>
+					</a>
+					<a href="mailto:lauidan31@gmail.com" aria-label="Email">
+						<svg viewBox="0 0 24 24" fill="currentColor"><path d="M2 4h20a1 1 0 0 1 1 1v14a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1zm10 8.6L3.5 6.2v12.3h17V6.2L12 12.6zM4.6 6h14.8L12 10.9 4.6 6z"/></svg>
+					</a>
+				</div>
+			</div>
+			<div class="avatar-ring">
+				<img src="public_html/assets/imgs/avatar1.png" alt="Idan Lau">
+			</div>
+		</div>
+	</header>
 
-    <!-- Portfolio Section -->
-    <section class="section bg-custom-gray" id="work-experience">
-        <div class="container">
-            <h1 class="mb-5">My Work Experience</h1>
-    
-            <div class="portfolio">
-                <div class="portfolio-container">
-    
-                    <div class="col-md-6 col-lg-4 web new">
-                        <div class="portfolio-item">
-                            <img src="public_html/assets/imgs/comityinc_logo.jpg" class="img-fluid" alt="Company 1">
-                            <div class="content-holder">
-                                <div class="text-holder">
-                                    <h6 class="title">Quantitative Engineer Intern</h6>
-                                    <p class="subtitle">Energies quant startup, Series A</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-    
-                    <div class="col-md-6 col-lg-4 web new">
-                        <div class="portfolio-item">
-                            <img src="public_html/assets/imgs/AI4ce_logo.png" class="img-fluid" alt="Company 2">
-                            <div class="content-holder">
-                                <div class="text-holder">
-                                    <h6 class="title">ML Researcher</h6>
-                                    <p class="subtitle">Deep learning in computer vision</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-    
-                    <div class="col-md-6 col-lg-4 web new">
-                        <div class="portfolio-item">
-                            <img src="public_html/assets/imgs/HSRN_logo.jpg" class="img-fluid" alt="Company 3">
-                            <div class="content-holder">
-                                <div class="text-holder">
-                                    <h6 class="title">Lead Network Engineer</h6>
-                                    <p class="subtitle">Network infra automation</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-    
-                    <div class="col-md-6 col-lg-4 web new">
-                        <div class="portfolio-item">
-                            <img src="public_html/assets/imgs/midasanalyticsai_logo.jpg" class="img-fluid" alt="Company 4">
-                            <div class="content-holder">
-                                <div class="text-holder">
-                                    <h6 class="title">Data Engineering Intern</h6>
-                                    <p class="subtitle">Financial news analytics startup, Seed round</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-    
-                </div>
-            </div>
-        </div>
-    </section>
+	<!-- About -->
+	<section id="about">
+		<div class="wrap">
+			<div class="section-head reveal"><span class="num">01.</span><h2>About Me</h2></div>
+			<div class="about-grid">
+				<div class="reveal">
+					<p>
+						I'm a machine learning enthusiast with a strong interest in power markets and robotics. My industry experience focuses on 
+						quantitative research in the power markets, while my academic research explores computer vision and deep learning for autonomous robotics.
+					</p>
+				</div>
+				<div class="info-card reveal">
+					<h3>Personal Info</h3>
+					<dl>
+						<dt>Email</dt>
+						<dd><a href="mailto:lauidan31@gmail.com">lauidan31@gmail.com</a></dd>
+						<dt>University</dt>
+						<dd>New York University</dd>
+						<dt>Degree</dt>
+						<dd>BS in Computer Science, Minor in Mathematics</dd>
+					</dl>
+				</div>
+			</div>
+		</div>
+	</section>
 
-    <!-- End of portfolio section -->
+	<!-- Experience -->
+	<section id="experience">
+		<div class="wrap">
+			<div class="section-head reveal"><span class="num">02.</span><h2>Work Experience</h2></div>
+			<div class="exp-list">
+				<div class="exp-card reveal">
+					<img class="exp-logo" src="public_html/assets/imgs/comityinc_logo.jpg" alt="Comity">
+					<div>
+						<h3>Machine Learning Engineer</h3>
+						<div class="org">Comity</div>
+						<p class="desc">Power Markets Trading, Series A</p>
+					</div>
+				</div>
+				<div class="exp-card reveal">
+					<img class="exp-logo" src="public_html/assets/imgs/AI4ce_logo.png" alt="AI4CE">
+					<div>
+						<h3>Machine Learning Researcher</h3>
+						<div class="org">AI4CE Lab, NYU</div>
+						<p class="desc">Robotics Research Lab</p>
+					</div>
+				</div>
+				<div class="exp-card reveal">
+					<img class="exp-logo" src="public_html/assets/imgs/midasanalyticsai_logo.jpg" alt="Midas Analytics AI">
+					<div>
+						<h3>Data Engineering Intern</h3>
+						<div class="org">Midas Analytics AI</div>
+						<p class="desc">Financial news analytics startup, Seed round</p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
 
-    <div class="section contact" id="contact">
-        <div id="map" class="map"></div>
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-8">
-                    <div class="contact-form-card">
-                        <h4 class="contact-title">Send a message</h4>
-                        <form id="contact-form">
-                            <input type="hidden" name="contact_number">
-                            <div class="form-group">
-                                <input  class="form-control" type="text" placeholder="Name *" name="user_name" required>
-                            </div>
-                            <div class="form-group">
-                                <input class="form-control" type="email" placeholder="Email *" name="user_email" required>
-                            </div>
-                            <div class="form-group">
-                                <textarea class="form-control" id=" name="message" placeholder="Message *" rows="7" required></textarea>
-                            </div>
-                            <div class="form-group ">
-                                <button type="submit" class="form-control btn btn-primary" >Send Message</button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
+	<!-- Research -->
+	<section id="research">
+		<div class="wrap">
+			<div class="section-head reveal"><span class="num">03.</span><h2>Research</h2></div>
+			<div class="proj-grid">
+				<div class="proj-card proj-featured reveal">
+					<div class="proj-body">
+						<div class="proj-meta">
+							<span class="award">IEEE ICRA 2026 — First Author</span>
+							<span class="proj-date">Accepted Jan 2026</span>
+						</div>
+						<h3><a href="https://arxiv.org/abs/2510.04282" target="_blank" rel="noopener">Flexible and Efficient Spatio-Temporal Transformer for Sequential Visual Place Recognition</a></h3>
+						<p class="proj-authors"><strong>Yu Kiu (Idan) Lau</strong>, Chao Chen, Ge Jin, Chen Feng</p>
+						<img class="proj-diagram" src="public_html/assets/imgs/adapt-stformer-arch.png" alt="Adapt-STformer architecture diagram">
+						<div class="tags">
+							<span class="tag">Visual Place Recognition</span>
+							<span class="tag">Transformers</span>
+							<span class="tag">Robotics</span>
+							<span class="tag">Adapt-STformer</span>
+						</div>
+						<div class="proj-links">
+							<a href="https://arxiv.org/abs/2510.04282" target="_blank" rel="noopener">Read on arXiv →</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
 
-                <div class="col-lg-4">
-                    <div class="contact-info-card">
-                        <h4 class="contact-title">Get in touch</h4>
-                        <div class="row mb-2">
-                        </div>
-                        <div class="row mb-2">
-                            <div class="col-1 pt-1 mr-1">
-                                <i class="ti-envelope icon-md"></i>
-                            </div>
-                            <div class="col-10">
-                                <h6 class="d-inline">Email :<br> <span class="text-muted">idanlau@nyu.edu</span></h6>
-                            </div>
-                        </div>
-                        <ul class="social-icons pt-4">
-                            <li class="social-item"><a class="social-link text-dark" href="https://www.linkedin.com/in/idan-lau-19bb671ba/" target="_blank"><i class="ti-linkedin" aria-hidden="true"></i></a></li>
-                            <li class="social-item"><a class="social-link text-dark" href="#"><i class="ti-twittereee" aria-hidden="true"></i></a></li>
-                            <li class="social-item"><a class="social-link text-dark" href="#"><i class="ti-googleeee" aria-hidden="true"></i></a></li>
-                            <li class="social-item"><a class="social-link text-dark" href="#"><i class="ti-instagrameee" aria-hidden="true"></i></a></li>
-                            <li class="social-item"><a class="social-link text-dark" href="#"><i class="ti-githubeee" aria-hidden="true"></i></a></li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
+	<!-- Projects -->
+	<section id="projects">
+		<div class="wrap">
+			<div class="section-head reveal"><span class="num">04.</span><h2>Projects</h2></div>
+			<div class="proj-grid">
+				<div class="proj-card proj-featured reveal">
+					<div class="proj-body">
+						<div class="proj-meta">
+							<span class="award">1st Place — Cloudera Evolve24 Hackathon</span>
+							<span class="proj-date">Oct 2024</span>
+						</div>
+						<h3><a href="https://github.com/jjl9895/PortfolioOptimizer" target="_blank" rel="noopener">LLM Financial Advisor</a></h3>
+						<ul class="proj-bullets">
+							<li>Built an LLM-powered portfolio advisor using RAG, Pinecone, and Cloudera AI Workbench for investment recommendations</li>
+							<li>Integrated Perplexity AI for financial news, Alpaca API for simulated trading and Streamlit as the user interface</li>
+						</ul>
+						<div class="tags">
+							<span class="tag">LLM</span>
+							<span class="tag">RAG</span>
+							<span class="tag">Pinecone</span>
+							<span class="tag">Cloudera AI</span>
+							<span class="tag">Perplexity AI</span>
+							<span class="tag">Alpaca API</span>
+							<span class="tag">Streamlit</span>
+						</div>
+						<div class="proj-links">
+							<a href="https://github.com/jjl9895/PortfolioOptimizer" target="_blank" rel="noopener">
+								<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .5C5.65.5.5 5.65.5 12c0 5.08 3.29 9.39 7.86 10.91.58.11.79-.25.79-.55v-2.17c-3.2.7-3.87-1.36-3.87-1.36-.53-1.33-1.28-1.69-1.28-1.69-1.05-.72.08-.7.08-.7 1.16.08 1.77 1.19 1.77 1.19 1.03 1.77 2.7 1.26 3.36.96.1-.75.4-1.26.73-1.55-2.55-.29-5.23-1.28-5.23-5.68 0-1.26.45-2.28 1.19-3.09-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.18 1.18a11.1 11.1 0 0 1 5.8 0c2.2-1.49 3.17-1.18 3.17-1.18.63 1.59.23 2.76.12 3.05.74.81 1.18 1.83 1.18 3.09 0 4.42-2.69 5.39-5.25 5.67.41.36.78 1.06.78 2.14v3.17c0 .31.21.67.8.55A11.52 11.52 0 0 0 23.5 12C23.5 5.65 18.35.5 12 .5z"/></svg>
+								Source
+							</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
 
-        </div>
-    </div>
-    <footer class="footer py-3">
-    </footer>
+	<script>
+		// Mobile nav toggle
+		var toggle = document.getElementById('navToggle');
+		var links = document.getElementById('navLinks');
+		toggle.addEventListener('click', function () {
+			links.classList.toggle('open');
+		});
+		links.addEventListener('click', function (e) {
+			if (e.target.tagName === 'A') links.classList.remove('open');
+		});
 
-	<!-- core  -->
-    <script src="public_html/assets/vendors/jquery/jquery-3.4.1.js"></script>
-    <script src="public_html/assets/vendors/bootstrap/bootstrap.bundle.js"></script>
+		// Scroll reveal
+		var observer = new IntersectionObserver(function (entries) {
+			entries.forEach(function (entry) {
+				if (entry.isIntersecting) {
+					entry.target.classList.add('visible');
+					observer.unobserve(entry.target);
+				}
+			});
+		}, { threshold: 0.1 });
 
-    <!-- bootstrap 3 affix -->
-    <script src="public_html/assets/vendors/bootstrap/bootstrap.affix.js"></script>
-
-    <!-- Isotope  -->
-    <script src="public_html/assets/vendors/isotope/isotope.pkgd.js"></script>
-    
-    <!-- Google mpas -->
-    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCtme10pzgKSPeJVJrG1O3tjR6lk98o4w8&callback=initMap"></script>
-
-    <!-- JohnDoe js -->
-    <script src="public_html/assets/js/johndoe.js"></script>
-
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
-    <script type="text/javascript">
-        (function() {
-            // https://dashboard.emailjs.com/admin/account
-            emailjs.init('_TTu73nwUESo3wJT7');
-        })();
-    </script>
-    <script type="text/javascript">
-        window.onload = function() {
-            document.getElementById('contact-form').addEventListener('submit', function(event) {
-                event.preventDefault();
-                // generate a five digit number for the contact_number variable
-                this.contact_number.value = Math.random() * 100000 | 0;
-                // these IDs from the previous steps
-                emailjs.sendForm('service_w67i5nt', 'template_m0ax5mp', this)
-                    .then(function() {
-                        console.log('SUCCESS!');
-                    }, function(error) {
-                        console.log('FAILED...', error);
-                    });
-            });
-        }
-    </script>
+		document.querySelectorAll('.reveal').forEach(function (el) {
+			observer.observe(el);
+		});
+	</script>
 
 </body>
 </html>
